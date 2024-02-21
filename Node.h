@@ -2,6 +2,7 @@
 
 #include<map>
 #include<list>
+#include<string>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ public:
 	Node(bool isEndOfSentence, map<char, Node*> children, Node* father, list<int> locations);
 	bool getisEndOfSentence();
 	void setisEndOfSentence(bool isEndOfSentence);
-	map<char, Node*> getChildren();
+	map<char, Node*>& getChildren();
 	void setChildren(map<char, Node*> children);
 	Node* getChild(char c);
 	void setChild(char c, Node* node);
@@ -26,6 +27,10 @@ public:
 	void addLocation(int location);
 	Node* getFather();
 	void setFather(Node* father);
+	void deleteAllChildren();
+	void findLocations(int& numberOfVisits, list<int>& result);
 
 
+
+	~Node();
 };

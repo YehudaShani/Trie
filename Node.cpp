@@ -23,7 +23,7 @@ void Node::setisEndOfSentence(bool isEndOfSentence) {
 	this->isEndOfSentence = isEndOfSentence;
 }
 
-map<char, Node*> Node::getChildren() {
+map<char, Node*>& Node::getChildren() {
 	return children;
 }
 
@@ -58,7 +58,51 @@ void Node::setFather(Node* father) {
 	this->father = father;
 }
 
+Node::~Node()
+{
+	
+}
+
 void Node::setChildren(map<char, Node*> children) {
 	this->children = children;
+}
+
+void Node::deleteAllChildren() {
+	for (auto it = children.begin(); it != children.end(); it++) {
+		it->second->deleteAllChildren();
+	}
+	delete this;
+}
+
+void Node::findLocations(int& numberOfVisits, list<int>& result)
+{
+    if (result.size() >= 3) {
+        return;
+    }
+    
+    // Increment the number of visits
+    numberOfVisits++;
+    
+    // Visit the children nodes in preorder fashion
+    for (auto it = children.begin(); it != children.end(); it++) {
+        Node* child = it->second;
+        child->findLocations(numberOfVisits, result);
+        if (result.size() >= 3) {
+            break;
+        }
+    }
+    
+    // If the current node is the end of a word, add its locations to the result
+    if (isEndOfSentence) {
+        for (auto it = locations.begin(); it != locations.end(); it++) {
+            result.push_back(*it);
+        }
+    }
+    
+    // Remove all results after the first 3
+    while (result.size() > 3) {
+        result.pop_back();
+    }
+    
 }
 

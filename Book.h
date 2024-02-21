@@ -3,12 +3,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include "Trie.h"
 using namespace std;
 
 class Book {
 private:
     string content;
     // TODO: Add a trie attribute
+    Trie* trie;
     void processContent();
 
 public:
