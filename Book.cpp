@@ -49,9 +49,9 @@ void Book::processContent() {
     while (stream >> word3) {
 		// add word1, word2, word3 to trie
 		trie->insert(word1 + " " + word2 + " " + word3, offset);
+        offset += word1.length() + 1;
 		word1 = word2;
 		word2 = word3;
-        offset += word1.length() + 1;
 	}
     this->trie = trie;
 }
@@ -88,31 +88,34 @@ string Book::extractSentence(int location) {
 
     bool begginingCut = true;
     bool endCut = true;
+    bool found = false;
 
     int words = 0;
-    while (start > 0 && words < 5) {
+    while (start > 0 && words <= 5 && !found) {
 		if (content[start] == ' ') {
 			words++;
 		}
 		if (content[start] == '.') {
             begginingCut = false;
-            start++;
-			break;
+			found = true;
+            start += 3;
 		}
 		start--;
 	}
-    if (words == 5) {
+    if (words == 6) {
 		start+= 2;
 	}
     // TODO: Go over the characters of the content from the location forwards until finding a '.' or until accumulating a total of 10 words.
 
-    while (end < content.length() && words < 11) {
+    found = false;
+
+    while (end < content.length() && words < 11 && !found) {
         if (content[end] == ' ') {
             words++;
 		}
         if (content[end] == '.') {
             endCut = false;
-            break;   
+            found = true;
         }
         end++;
     }

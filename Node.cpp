@@ -76,9 +76,9 @@ void Node::deleteAllChildren() {
 
 void Node::findLocations(int& numberOfVisits, list<int>& result)
 {
-    if (result.size() >= 3) {
+   /* if (result.size() >= 3) {
         return;
-    }
+    }*/
     
     // Increment the number of visits
     numberOfVisits++;
@@ -87,9 +87,9 @@ void Node::findLocations(int& numberOfVisits, list<int>& result)
     for (auto it = children.begin(); it != children.end(); it++) {
         Node* child = it->second;
         child->findLocations(numberOfVisits, result);
-        if (result.size() >= 3) {
+        /*if (result.size() >= 3) {
             break;
-        }
+        }*/
     }
     
     // If the current node is the end of a word, add its locations to the result
